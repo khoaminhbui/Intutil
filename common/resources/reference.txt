@@ -1,0 +1,1 @@
+http://stackoverflow.com/questions/1926264/color-different-parts-of-a-richtextbox-string
