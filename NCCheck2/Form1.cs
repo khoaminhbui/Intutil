@@ -12,6 +12,8 @@ namespace NCCheck2
 {
    public partial class NCCheck : Form
    {
+      private NCService m_ncService;
+
       public NCCheck()
       {
          InitializeComponent();
@@ -19,6 +21,8 @@ namespace NCCheck2
 
       private void openFile_Click(object sender, EventArgs e)
       {
+         m_ncService = new NCService();
+
          // Create an instance of the open file dialog box.
          OpenFileDialog openFileDialog1 = new OpenFileDialog();
 
@@ -40,7 +44,7 @@ namespace NCCheck2
             {
                while (reader.Peek() >= 0)
                {
-                  String processedLine = NCService.checkLine(reader.ReadLine());
+                  String processedLine = m_ncService.checkLine(reader.ReadLine());
                   showLine(processedLine);
                }
             }
