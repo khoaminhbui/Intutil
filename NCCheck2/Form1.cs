@@ -16,5 +16,15 @@ namespace NCCheck2
       {
          InitializeComponent();
       }
+
+      private void openFile_Click(object sender, EventArgs e)
+      {
+
+      }
+
+      private void checkFile_Click(object sender, EventArgs e)
+      {
+
+      }
    }
 }
