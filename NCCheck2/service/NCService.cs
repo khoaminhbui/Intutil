@@ -92,9 +92,9 @@ namespace NCCheck2
             // Bypass line that is belong to a work section or header and footer of a section.
             if (line.Section == null
                || line.IsSectionHeader || line.IsSectionFooter)
-            {
-               continue;
-            }
+            {       continue;
+  
+                  }
 
             // Parse words of the line into tokens.
             line.TokenList = new List<Token>();
@@ -104,7 +104,7 @@ namespace NCCheck2
             {
                Token token = new Token();
                token.Text = tokenText;
-               token.errorCode = Const.ERROR_NONE;
+               token.ErrorCode = Const.ErrorCode.ERROR_CODE_NONE;
 
                // check
                foreach (String regex in REGEX_TOKEN_LIST)
@@ -117,13 +117,18 @@ namespace NCCheck2
                      int tokenNumber = Convert.ToInt32(token.Text.Substring(1));
                      if (tokenNumber != line.Section.Number)
                      {
-                        token.errorCode = Const.ERROR_SECTION_ID_MISMATCH;
+                        token.ErrorCode = Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH;
+                     }
+                     else
+                     {
+                        token.ErrorCode = Const.ErrorCode.ERROR_CODE_OK;
                      }
 
                      break;
                   }
                }
-               
+
+               line.TokenList.Add(token);
             }
          }
       }

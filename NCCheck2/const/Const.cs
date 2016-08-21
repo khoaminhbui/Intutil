@@ -8,7 +8,11 @@ namespace NCCheck2
 {
    class Const
    {
-      public static int ERROR_NONE = 0;
-      public static int ERROR_SECTION_ID_MISMATCH = 1;
+      public class ErrorCode
+      {
+         public static int ERROR_CODE_NONE = -1;
+         public static int ERROR_CODE_OK = 0;
+         public static int ERROR_CODE_SECTION_ID_MISMATCH = 1;
+      }
    }
 }

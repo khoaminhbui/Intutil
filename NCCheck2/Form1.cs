@@ -117,15 +117,19 @@ namespace NCCheck2
             int endColorPos = token.Text.Length;
             textbox.AppendText(token.Text + " ");
             textbox.Select(startColorPos, endColorPos);
-            if (Const.ERROR_SECTION_ID_MISMATCH.Equals(token.errorCode))
+            if (Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH.Equals(token.ErrorCode))
             {
                textbox.SelectionColor = Color.White;
                textbox.SelectionBackColor = Color.Red;
             }
-            else
+            else if (Const.ErrorCode.ERROR_CODE_OK.Equals(token.ErrorCode))
             {
                textbox.SelectionColor = Color.White;
                textbox.SelectionBackColor = Color.Green;
+            }
+            else
+            {
+               textbox.SelectionColor = Color.Black;
             }
          }
 

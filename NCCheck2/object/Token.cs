@@ -9,6 +9,6 @@ namespace NCCheck2
    class Token
    {
       public String Text { get; set; }
-      public int errorCode { get; set; }
+      public int ErrorCode { get; set; }
    }
 }
