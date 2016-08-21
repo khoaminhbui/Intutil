@@ -68,6 +68,7 @@ namespace NCCheck
             m_fileName = openFileDialog1.FileName;
             Stream fileStream = openFileDialog1.OpenFile();
 
+            // Read lines
             using (StreamReader reader = new StreamReader(fileStream))
             {
                int linePos = 0;
@@ -80,7 +81,7 @@ namespace NCCheck
             }
             fileStream.Close();
 
-            // check
+            // Check
             m_ncService.checkFile();
             updateStatistic(m_ncService.ErrorCount);
             
@@ -93,7 +94,31 @@ namespace NCCheck
 
       private void checkFile_Click(object sender, EventArgs e)
       {
-         
+         // Get current text
+         String text = m_rtNCOriginal.Text;
+         String[] lines = text.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
+
+         // Clear state
+         resetView();
+         m_ncService = new NCService();
+
+         // Read lines
+         int linePos = 0;
+         foreach (String lineText in lines)
+         {
+            String _lineTextWithoutNumber = lineText.Substring(5);
+            Line line = m_ncService.prepareLine(_lineTextWithoutNumber);
+            line.Position = ++linePos;
+         }
+
+         // Check
+         m_ncService.checkFile();
+         updateStatistic(m_ncService.ErrorCount);
+
+         foreach (Line line in m_ncService.Lines)
+         {
+            displayCheckedLine(line, m_rtNCOriginal);
+         }
       }
 
       private void saveFile_Click(object sender, EventArgs e)

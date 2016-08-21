@@ -35,12 +35,12 @@ namespace NCCheck
          this.m_toolbar = new System.Windows.Forms.ToolStrip();
          this.m_openFile = new System.Windows.Forms.ToolStripButton();
          this.m_checkFile = new System.Windows.Forms.ToolStripButton();
+         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+         this.m_saveFile = new System.Windows.Forms.ToolStripButton();
          this.label1 = new System.Windows.Forms.Label();
          this.m_rtNCResult = new System.Windows.Forms.RichTextBox();
          this.label2 = new System.Windows.Forms.Label();
          this.m_lblErrorCount = new System.Windows.Forms.Label();
-         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-         this.m_saveFile = new System.Windows.Forms.ToolStripButton();
          this.m_toolbar.SuspendLayout();
          this.SuspendLayout();
          // 
@@ -87,8 +87,25 @@ namespace NCCheck
          this.m_checkFile.ImageTransparentColor = System.Drawing.Color.Magenta;
          this.m_checkFile.Name = "m_checkFile";
          this.m_checkFile.Size = new System.Drawing.Size(44, 37);
-         this.m_checkFile.Text = "Check";
+         this.m_checkFile.Text = "Re-check";
          this.m_checkFile.Click += new System.EventHandler(this.checkFile_Click);
+         // 
+         // toolStripSeparator1
+         // 
+         this.toolStripSeparator1.Name = "toolStripSeparator1";
+         this.toolStripSeparator1.Size = new System.Drawing.Size(6, 40);
+         // 
+         // m_saveFile
+         // 
+         this.m_saveFile.AutoSize = false;
+         this.m_saveFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+         this.m_saveFile.Image = ((System.Drawing.Image)(resources.GetObject("m_saveFile.Image")));
+         this.m_saveFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+         this.m_saveFile.Name = "m_saveFile";
+         this.m_saveFile.Size = new System.Drawing.Size(40, 40);
+         this.m_saveFile.Text = "toolStripButton1";
+         this.m_saveFile.ToolTipText = "Save";
+         this.m_saveFile.Click += new System.EventHandler(this.saveFile_Click);
          // 
          // label1
          // 
@@ -113,9 +130,9 @@ namespace NCCheck
          this.label2.AutoSize = true;
          this.label2.Location = new System.Drawing.Point(592, 48);
          this.label2.Name = "label2";
-         this.label2.Size = new System.Drawing.Size(35, 13);
+         this.label2.Size = new System.Drawing.Size(32, 13);
          this.label2.TabIndex = 4;
-         this.label2.Text = "Error: ";
+         this.label2.Text = "Fixed";
          // 
          // m_lblErrorCount
          // 
@@ -124,23 +141,6 @@ namespace NCCheck
          this.m_lblErrorCount.Name = "m_lblErrorCount";
          this.m_lblErrorCount.Size = new System.Drawing.Size(0, 13);
          this.m_lblErrorCount.TabIndex = 5;
-         // 
-         // toolStripSeparator1
-         // 
-         this.toolStripSeparator1.Name = "toolStripSeparator1";
-         this.toolStripSeparator1.Size = new System.Drawing.Size(6, 40);
-         // 
-         // m_saveFile
-         // 
-         this.m_saveFile.AutoSize = false;
-         this.m_saveFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-         this.m_saveFile.Image = ((System.Drawing.Image)(resources.GetObject("m_saveFile.Image")));
-         this.m_saveFile.ImageTransparentColor = System.Drawing.Color.Magenta;
-         this.m_saveFile.Name = "m_saveFile";
-         this.m_saveFile.Size = new System.Drawing.Size(40, 40);
-         this.m_saveFile.Text = "toolStripButton1";
-         this.m_saveFile.ToolTipText = "Save";
-         this.m_saveFile.Click += new System.EventHandler(this.saveFile_Click);
          // 
          // NCCheck
          // 
