@@ -243,3 +243,7 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+/common/run/NCCheck.vshost.exe.manifest
+/common/run/NCCheck.vshost.exe.config
+/common/run/NCCheck.vshost.exe
+/common/run/NCCheck.exe.config
