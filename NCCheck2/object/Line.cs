@@ -18,6 +18,7 @@ namespace NCCheck2
       public String Text { get; set; }
       public bool IsSectionHeader { get; set; }
       public bool IsSectionFooter { get; set; }
+      public bool IsLastLine { get; set; }
 
       public List<Token> TokenList { get; set; }
       public WorkSection Section { get; set; }

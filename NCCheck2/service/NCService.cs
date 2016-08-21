@@ -64,7 +64,7 @@ namespace NCCheck2
          {
             Regex sectionEndRegex = new Regex(REGEX_SECTION_END);
             Match match = sectionEndRegex.Match(lineText);
-            if (match.Success || MARKER_FILE_END.Equals(lineText))
+            if (match.Success)
             {
                m_currentSection.EndLine = Lines.Count - 1;
 
@@ -79,6 +79,11 @@ namespace NCCheck2
          if (m_currentSection != null)
          {
             line.Section = m_currentSection;
+         }
+
+         if (line.Position > 1 && MARKER_FILE_END.Equals(lineText))
+         {
+            line.IsLastLine = true;
          }
 
          Lines.Add(line);

@@ -71,20 +71,23 @@ namespace NCCheck2
                {
                   Line line = m_ncService.prepareLine(reader.ReadLine());
                   line.Position = ++linePos;
-                  formatNormalLine(line, m_rtNCOriginal);
+                  //formatNormalLine(line, m_rtNCOriginal);
                }
             }
             fileStream.Close();
+
+            // check
+            m_ncService.checkFile();
+            foreach (Line line in m_ncService.Lines)
+            {
+               displayCheckedLine(line, m_rtNCOriginal);
+            }
          }
       }
 
       private void checkFile_Click(object sender, EventArgs e)
       {
-         m_ncService.checkFile();
-         foreach (Line line in m_ncService.Lines)
-         {
-            displayCheckedLine(line, m_rtNCResult);
-         }
+         
       }
 
       private void formatNormalLine(Line line, RichTextBox textbox)
@@ -108,7 +111,10 @@ namespace NCCheck2
             textbox.SelectionBackColor = Color.White;
          }
 
-         textbox.AppendText(Environment.NewLine);
+         if (!line.IsLastLine)
+         {
+            textbox.AppendText(Environment.NewLine);
+         }
       }
 
       private void formatLineNumber(Line line, RichTextBox textbox)
