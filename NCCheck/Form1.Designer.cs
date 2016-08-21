@@ -136,11 +136,11 @@ namespace NCCheck
          // 
          // m_lblErrorCount
          // 
-         this.m_lblErrorCount.AutoSize = true;
          this.m_lblErrorCount.Location = new System.Drawing.Point(71, 48);
          this.m_lblErrorCount.Name = "m_lblErrorCount";
-         this.m_lblErrorCount.Size = new System.Drawing.Size(0, 13);
+         this.m_lblErrorCount.Size = new System.Drawing.Size(497, 13);
          this.m_lblErrorCount.TabIndex = 5;
+         this.m_lblErrorCount.Text = "Waiting for File...";
          // 
          // NCCheck
          // 

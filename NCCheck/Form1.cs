@@ -31,8 +31,8 @@ namespace NCCheck
 
    public partial class NCCheck : Form
    {
-      private NCService m_ncService;
-      private String m_fileName;
+      private NCService m_ncService = null;
+      private String m_fileName = null;
 
       [DllImport("User32.dll")]
       public extern static int GetScrollPos(IntPtr hWnd, int nBar);
@@ -83,17 +83,24 @@ namespace NCCheck
 
             // Check
             m_ncService.checkFile();
-            updateStatistic(m_ncService.ErrorCount);
             
             foreach (Line line in m_ncService.Lines)
             {
                displayCheckedLine(line, m_rtNCOriginal);
             }
+
+            updateStatistic(m_ncService.ErrorCount);
          }
       }
 
       private void checkFile_Click(object sender, EventArgs e)
       {
+         if (m_ncService == null || m_fileName == null)
+         {
+            MessageBox.Show("Please open a NC file to check.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            return;
+         }
+
          // Get current text
          String text = m_rtNCOriginal.Text;
          String[] lines = text.Split(new string[] { "\n" }, StringSplitOptions.RemoveEmptyEntries);
@@ -113,29 +120,39 @@ namespace NCCheck
 
          // Check
          m_ncService.checkFile();
-         updateStatistic(m_ncService.ErrorCount);
 
          foreach (Line line in m_ncService.Lines)
          {
             displayCheckedLine(line, m_rtNCOriginal);
          }
+
+         updateStatistic(m_ncService.ErrorCount);
       }
 
       private void saveFile_Click(object sender, EventArgs e)
       {
+         if (m_ncService == null || m_fileName == null)
+         {
+            MessageBox.Show("Please open a NC file to check.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            return;
+         }
+
          List<String> fixedText = m_ncService.getFixedText();
          String path = Path.GetDirectoryName(m_fileName);
          String name = Path.GetFileNameWithoutExtension(m_fileName);
          String extension = Path.GetExtension(m_fileName);
          String outFileName = path + "\\" + name + "_fixed" + extension;
          File.WriteAllLines(outFileName, fixedText);
+
+         MessageBox.Show("File is fixed and save to:\n" + outFileName, "Save File", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
       }
 
       private void resetView()
       {
          this.m_rtNCOriginal.Text = "";
          this.m_rtNCResult.Text = "";
-         this.m_lblErrorCount.Text = "";
+         this.m_lblErrorCount.Text = "Waiting for File...";
+         this.m_lblErrorCount.ForeColor = Color.Black;
       }
 
       private void formatNormalLine(Line line, RichTextBox textbox)
@@ -252,7 +269,5 @@ namespace NCCheck
             m_lblErrorCount.ForeColor = Color.Green;
          }
       }
-
-      
    }
 }
