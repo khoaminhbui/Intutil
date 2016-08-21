@@ -32,6 +32,7 @@ namespace NCCheck
    public partial class NCCheck : Form
    {
       private NCService m_ncService;
+      private String m_fileName;
 
       [DllImport("User32.dll")]
       public extern static int GetScrollPos(IntPtr hWnd, int nBar);
@@ -64,6 +65,7 @@ namespace NCCheck
          if (DialogResult.OK.Equals(result))
          {
             // Open the selected file to read.
+            m_fileName = openFileDialog1.FileName;
             Stream fileStream = openFileDialog1.OpenFile();
 
             using (StreamReader reader = new StreamReader(fileStream))
@@ -92,6 +94,16 @@ namespace NCCheck
       private void checkFile_Click(object sender, EventArgs e)
       {
          
+      }
+
+      private void saveFile_Click(object sender, EventArgs e)
+      {
+         List<String> fixedText = m_ncService.getFixedText();
+         String path = Path.GetDirectoryName(m_fileName);
+         String name = Path.GetFileNameWithoutExtension(m_fileName);
+         String extension = Path.GetExtension(m_fileName);
+         String outFileName = path + "\\" + name + "_fixed" + extension;
+         File.WriteAllLines(outFileName, fixedText);
       }
 
       private void resetView()
@@ -156,8 +168,8 @@ namespace NCCheck
          foreach (Token token in line.TokenList)
          {
             int startColorPos = textbox.TextLength;
-            int endColorPos = token.Text.Length;
-            textbox.AppendText(token.Text);
+            int endColorPos = token.OriginalText.Length;
+            textbox.AppendText(token.OriginalText);
             textbox.Select(startColorPos, endColorPos);
             if (Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH.Equals(token.ErrorCode))
             {
@@ -215,5 +227,7 @@ namespace NCCheck
             m_lblErrorCount.ForeColor = Color.Green;
          }
       }
+
+      
    }
 }

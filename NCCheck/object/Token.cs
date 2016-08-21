@@ -8,7 +8,8 @@ namespace NCCheck
 {
    class Token
    {
-      public String Text { get; set; }
+      public String OriginalText { get; set; }
+      public String FixedText { get; set; }
       public int ErrorCode { get; set; }
    }
 }

@@ -39,6 +39,8 @@ namespace NCCheck
          this.m_rtNCResult = new System.Windows.Forms.RichTextBox();
          this.label2 = new System.Windows.Forms.Label();
          this.m_lblErrorCount = new System.Windows.Forms.Label();
+         this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+         this.m_saveFile = new System.Windows.Forms.ToolStripButton();
          this.m_toolbar.SuspendLayout();
          this.SuspendLayout();
          // 
@@ -57,7 +59,9 @@ namespace NCCheck
          this.m_toolbar.ImageScalingSize = new System.Drawing.Size(40, 40);
          this.m_toolbar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_openFile,
-            this.m_checkFile});
+            this.m_checkFile,
+            this.toolStripSeparator1,
+            this.m_saveFile});
          this.m_toolbar.Location = new System.Drawing.Point(0, 0);
          this.m_toolbar.Name = "m_toolbar";
          this.m_toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
@@ -121,6 +125,23 @@ namespace NCCheck
          this.m_lblErrorCount.Size = new System.Drawing.Size(0, 13);
          this.m_lblErrorCount.TabIndex = 5;
          // 
+         // toolStripSeparator1
+         // 
+         this.toolStripSeparator1.Name = "toolStripSeparator1";
+         this.toolStripSeparator1.Size = new System.Drawing.Size(6, 40);
+         // 
+         // m_saveFile
+         // 
+         this.m_saveFile.AutoSize = false;
+         this.m_saveFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+         this.m_saveFile.Image = ((System.Drawing.Image)(resources.GetObject("m_saveFile.Image")));
+         this.m_saveFile.ImageTransparentColor = System.Drawing.Color.Magenta;
+         this.m_saveFile.Name = "m_saveFile";
+         this.m_saveFile.Size = new System.Drawing.Size(40, 40);
+         this.m_saveFile.Text = "toolStripButton1";
+         this.m_saveFile.ToolTipText = "Save";
+         this.m_saveFile.Click += new System.EventHandler(this.saveFile_Click);
+         // 
          // NCCheck
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -152,6 +173,8 @@ namespace NCCheck
       private System.Windows.Forms.RichTextBox m_rtNCResult;
       private System.Windows.Forms.Label label2;
       private System.Windows.Forms.Label m_lblErrorCount;
+      private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+      private System.Windows.Forms.ToolStripButton m_saveFile;
    }
 }
 

@@ -111,22 +111,24 @@ namespace NCCheck
             foreach (String tokenText in lineParts)
             {
                Token token = new Token();
-               token.Text = tokenText;
+               token.OriginalText = tokenText;
                token.ErrorCode = Const.ErrorCode.ERROR_CODE_NONE;
 
                // check
                foreach (String regex in REGEX_TOKEN_LIST)
                {
                   Regex regexToken = new Regex(regex);
-                  Match match = regexToken.Match(token.Text);
+                  Match match = regexToken.Match(token.OriginalText);
                   if (match.Success)
                   {
                      // Predefined tokens with Number that mismatch Section Number is considered errornous.
-                     int tokenNumber = Convert.ToInt32(token.Text.Substring(1));
+                     int tokenNumber = Convert.ToInt32(token.OriginalText.Substring(1));
                      if (tokenNumber != line.Section.Number)
                      {
                         token.ErrorCode = Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH;
                         this.ErrorCount++;
+
+                        token.FixedText = token.OriginalText.Substring(0, 1) + line.Section.Number;
                      }
                      else
                      {
@@ -140,6 +142,40 @@ namespace NCCheck
                line.TokenList.Add(token);
             }
          }
+      }
+
+      public List<String> getFixedText()
+      {
+         List<String> fixedLines = new List<String>();
+         foreach (Line line in Lines)
+         {
+            // Bypass line that is belong to a work section or header and footer of a section.
+            if (line.Section == null
+               || line.IsSectionHeader || line.IsSectionFooter)
+            {
+               fixedLines.Add(line.Text);
+               continue;
+            }
+
+            // Get fixed text from token
+            String lineText = "";
+            foreach (Token token in line.TokenList)
+            {
+               if (token.ErrorCode == Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH)
+               {
+                  lineText += token.FixedText + " ";
+               }
+               else
+               {
+                  lineText += token.OriginalText + " ";
+               }
+            }
+
+            lineText.Trim();
+            fixedLines.Add(lineText);
+         }
+
+         return fixedLines;
       }
    }
 }
