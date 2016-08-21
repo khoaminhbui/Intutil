@@ -8,7 +8,7 @@ namespace NCCheck2
 {
    class WorkSection
    {
-      public int ID { get; set; }
+      public int Number { get; set; }
       public int StartLine { get; set; }
       public int EndLine { get; set; }
       public String Name { get; set; }

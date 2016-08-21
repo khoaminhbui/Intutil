@@ -47,7 +47,7 @@ namespace NCCheck2
                {
                   Line line = m_ncService.prepareLine(reader.ReadLine());
                   line.Position = ++linePos;
-                  showLine(line);
+                  formatNormalLine(line, m_rtNCOriginal);
                }
             }
             fileStream.Close();
@@ -57,43 +57,91 @@ namespace NCCheck2
       private void checkFile_Click(object sender, EventArgs e)
       {
          m_ncService.checkFile();
+         foreach (Line line in m_ncService.Lines)
+         {
+            displayCheckedLine(line, m_rtNCResult);
+         }
       }
 
-      private void showLine(Line line)
+      private void formatNormalLine(Line line, RichTextBox textbox)
       {
          // Line number
-         int startColorPos = m_rtNCOriginal.TextLength;
+         formatLineNumber(line, textbox);
+
+         // Text
+         int startColorPos = textbox.TextLength;
+         int endColorPos = line.Text.Length;
+         textbox.AppendText(line.Text);
+         textbox.Select(startColorPos, endColorPos);
+         if (line.IsSectionHeader || line.IsSectionFooter)
+         {
+            textbox.SelectionColor = Color.Green;
+            textbox.SelectionBackColor = Color.Yellow;
+         }
+         else
+         {
+            textbox.SelectionColor = Color.Black;
+         }
+
+         textbox.AppendText(Environment.NewLine);
+      }
+
+      private void formatLineNumber(Line line, RichTextBox textbox)
+      {
+         int startColorPos = textbox.TextLength;
          int endColorPos = 6;
          String numberMarker = "    ";
          if (line.IsSectionHeader)
          {
             numberMarker = " " + NCService.SECTION_START + " ";
          }
-         else if (line.IsSectionEnd)
+         else if (line.IsSectionFooter)
          {
             numberMarker = " " + NCService.SECTION_END + " ";
          }
-         m_rtNCOriginal.AppendText(line.Position.ToString().PadLeft(3, ' ') + numberMarker);
-         m_rtNCOriginal.Select(startColorPos, endColorPos);
-         m_rtNCOriginal.SelectionColor = Color.Black;
-         m_rtNCOriginal.SelectionBackColor = Color.LightGray;
+         textbox.AppendText(line.Position.ToString().PadLeft(3, ' ') + numberMarker);
+         textbox.Select(startColorPos, endColorPos);
+         textbox.SelectionColor = Color.Black;
+         textbox.SelectionBackColor = Color.LightGray;
+      }
 
-         // Text
-         startColorPos = m_rtNCOriginal.TextLength;
-         endColorPos = line.Text.Length;
-         m_rtNCOriginal.AppendText(line.Text);
-         m_rtNCOriginal.Select(startColorPos, endColorPos);
-         if (line.IsSectionHeader || line.IsSectionEnd)
+      private void formatSectionLine(Line line, RichTextBox textbox)
+      {
+         // Line number
+         formatLineNumber(line, textbox);
+
+         // Checked Text
+         foreach (Token token in line.TokenList)
          {
-            m_rtNCOriginal.SelectionColor = Color.Green;
-            m_rtNCOriginal.SelectionBackColor = Color.Yellow;
+            int startColorPos = textbox.TextLength;
+            int endColorPos = token.Text.Length;
+            textbox.AppendText(token.Text + " ");
+            textbox.Select(startColorPos, endColorPos);
+            if (Const.ERROR_SECTION_ID_MISMATCH.Equals(token.errorCode))
+            {
+               textbox.SelectionColor = Color.White;
+               textbox.SelectionBackColor = Color.Red;
+            }
+            else
+            {
+               textbox.SelectionColor = Color.White;
+               textbox.SelectionBackColor = Color.Green;
+            }
+         }
+
+         textbox.AppendText(Environment.NewLine);
+      }
+
+      private void displayCheckedLine(Line line, RichTextBox textbox)
+      {
+         if (line.TokenList == null)
+         {
+            formatNormalLine(line, textbox);
          }
          else
          {
-            m_rtNCOriginal.SelectionColor = Color.Black;
+            formatSectionLine(line, textbox);
          }
-
-         m_rtNCOriginal.AppendText(Environment.NewLine);
       }
    }
 }

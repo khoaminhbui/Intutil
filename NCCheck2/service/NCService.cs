@@ -18,10 +18,11 @@ namespace NCCheck2
       public static String SECTION_START = "^";
       public static String SECTION_END = "$";
 
-      public List<Line> m_lines = new List<Line>();
       public List<WorkSection> m_workSections = new List<WorkSection>();
-      private String m_status = STATUS_NONE;
+      private String m_status;
       private WorkSection m_currentSection;
+
+      public List<Line> Lines { get; set; }
 
       public NCService()
       {
@@ -30,55 +31,72 @@ namespace NCCheck2
             @"^D\d+$",
             @"^H\d+$"
          };
+
+         m_currentSection = null;
+         m_status = STATUS_NONE;
+         Lines = new List<Line>();
       }
 
-      public Line prepareLine(String line)
+      public Line prepareLine(String lineText)
       {
-         Line result = new Line();
-         result.Text = line;
+         Line line = new Line();
+         line.Text = lineText;
 
          // Analyze line
          if (STATUS_NONE.Equals(m_status))
          {
             Regex sectionBeginRegex = new Regex(REGEX_SECTION_HEADER);
-            Match match = sectionBeginRegex.Match(line);
+            Match match = sectionBeginRegex.Match(lineText);
             if (match.Success)
             {
-               String[] sectionNameParts = line.Split(' ');
+               String[] sectionNameParts = lineText.Split(' ');
                m_currentSection = new WorkSection();
-               m_currentSection.ID = Convert.ToInt32(sectionNameParts[0].Substring(1));
-               m_currentSection.StartLine = m_lines.Count;
+               m_currentSection.Number = Convert.ToInt32(sectionNameParts[0].Substring(1));
+               m_currentSection.StartLine = Lines.Count;
                m_currentSection.Name = sectionNameParts[0];
-               m_currentSection.Description = m_lines[m_currentSection.StartLine - 2].Text;
+               m_currentSection.Description = Lines[m_currentSection.StartLine - 2].Text;
 
                m_status = STATUS_SECTION_BEGIN;
-               result.IsSectionHeader = true;
+               line.IsSectionHeader = true;
             }
          }
          else if (STATUS_SECTION_BEGIN.Equals(m_status))
          {
             Regex sectionEndRegex = new Regex(REGEX_SECTION_END);
-            Match match = sectionEndRegex.Match(line);
-            if (match.Success || MARKER_FILE_END.Equals(line))
+            Match match = sectionEndRegex.Match(lineText);
+            if (match.Success || MARKER_FILE_END.Equals(lineText))
             {
-               m_currentSection.EndLine = m_lines.Count - 1;
+               m_currentSection.EndLine = Lines.Count - 1;
 
                m_workSections.Add(m_currentSection);
 
                m_currentSection = null;
                m_status = STATUS_NONE;
-               result.IsSectionEnd = true;
+               line.IsSectionFooter = true;
             }
          }
 
-         m_lines.Add(result);
-         return result;
+         if (m_currentSection != null)
+         {
+            line.Section = m_currentSection;
+         }
+
+         Lines.Add(line);
+         return line;
       }
 
       public void checkFile()
       {
-         foreach(Line line in m_lines)
+         foreach(Line line in Lines)
          {
+            // Bypass line that is belong to a work section or header and footer of a section.
+            if (line.Section == null
+               || line.IsSectionHeader || line.IsSectionFooter)
+            {
+               continue;
+            }
+
+            // Parse words of the line into tokens.
             line.TokenList = new List<Token>();
 
             String[] lineParts = line.Text.Split(' ');
@@ -95,7 +113,14 @@ namespace NCCheck2
                   Match match = regexToken.Match(token.Text);
                   if (match.Success)
                   {
-                     //String tokenId = 
+                     // Predefined tokens with Number that mismatch Section Number is considered errornous.
+                     int tokenNumber = Convert.ToInt32(token.Text.Substring(1));
+                     if (tokenNumber != line.Section.Number)
+                     {
+                        token.errorCode = Const.ERROR_SECTION_ID_MISMATCH;
+                     }
+
+                     break;
                   }
                }
                

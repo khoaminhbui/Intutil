@@ -48,7 +48,7 @@ namespace NCCheck2
          this.m_rtNCOriginal.Size = new System.Drawing.Size(400, 500);
          this.m_rtNCOriginal.TabIndex = 0;
          this.m_rtNCOriginal.Text = "";
-         this.m_rtNCOriginal.Font = new System.Drawing.Font(FontFamily.GenericMonospace, this.m_rtNCOriginal.Font.Size);
+         this.m_rtNCOriginal.Font = new Font(FontFamily.GenericMonospace, this.m_rtNCOriginal.Font.Size);
          // 
          // toolStrip1
          // 
@@ -97,6 +97,7 @@ namespace NCCheck2
          this.m_rtNCResult.Size = new System.Drawing.Size(400, 500);
          this.m_rtNCResult.TabIndex = 3;
          this.m_rtNCResult.Text = "";
+         this.m_rtNCResult.Font = new Font(FontFamily.GenericMonospace, this.m_rtNCOriginal.Font.Size);
          // 
          // label2
          // 
