@@ -45,6 +45,8 @@ namespace NCCheck2
 
       private void openFile_Click(object sender, EventArgs e)
       {
+         resetView();
+
          m_ncService = new NCService();
 
          // Create an instance of the open file dialog box.
@@ -78,6 +80,8 @@ namespace NCCheck2
 
             // check
             m_ncService.checkFile();
+            updateStatistic(m_ncService.ErrorCount);
+            
             foreach (Line line in m_ncService.Lines)
             {
                displayCheckedLine(line, m_rtNCOriginal);
@@ -88,6 +92,13 @@ namespace NCCheck2
       private void checkFile_Click(object sender, EventArgs e)
       {
          
+      }
+
+      private void resetView()
+      {
+         this.m_rtNCOriginal.Text = "";
+         this.m_rtNCResult.Text = "";
+         this.m_lblErrorCount.Text = "";
       }
 
       private void formatNormalLine(Line line, RichTextBox textbox)
@@ -183,6 +194,25 @@ namespace NCCheck2
          else
          {
             formatSectionLine(line, textbox);
+         }
+      }
+
+      private void updateStatistic(int errorCount)
+      {
+         if (errorCount > 1)
+         {
+            m_lblErrorCount.Text = errorCount.ToString() + " errors";
+            m_lblErrorCount.ForeColor = Color.Red;
+         }
+         else if (errorCount == 1)
+         {
+            m_lblErrorCount.Text = errorCount.ToString() + " error";
+            m_lblErrorCount.ForeColor = Color.Red;
+         }
+         else
+         {
+            m_lblErrorCount.Text = "No error";
+            m_lblErrorCount.ForeColor = Color.Green;
          }
       }
    }

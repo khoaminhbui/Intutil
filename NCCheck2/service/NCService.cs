@@ -18,11 +18,12 @@ namespace NCCheck2
       public static String SECTION_START = "^";
       public static String SECTION_END = "$";
 
-      public List<WorkSection> m_workSections = new List<WorkSection>();
+      public List<WorkSection> m_workSections;
       private String m_status;
       private WorkSection m_currentSection;
 
       public List<Line> Lines { get; set; }
+      public int ErrorCount { get; set; }
 
       public NCService()
       {
@@ -32,9 +33,11 @@ namespace NCCheck2
             @"^H\d+$"
          };
 
+         m_workSections = new List<WorkSection>();
          m_currentSection = null;
          m_status = STATUS_NONE;
          Lines = new List<Line>();
+         ErrorCount = 0;
       }
 
       public Line prepareLine(String lineText)
@@ -92,14 +95,14 @@ namespace NCCheck2
 
       public void checkFile()
       {
-         foreach(Line line in Lines)
+         foreach (Line line in Lines)
          {
             // Bypass line that is belong to a work section or header and footer of a section.
             if (line.Section == null
                || line.IsSectionHeader || line.IsSectionFooter)
-            {       continue;
-  
-                  }
+            {
+               continue;
+            }
 
             // Parse words of the line into tokens.
             line.TokenList = new List<Token>();
@@ -123,6 +126,7 @@ namespace NCCheck2
                      if (tokenNumber != line.Section.Number)
                      {
                         token.ErrorCode = Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH;
+                        this.ErrorCount++;
                      }
                      else
                      {

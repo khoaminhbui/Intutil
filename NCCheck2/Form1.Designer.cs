@@ -38,6 +38,7 @@ namespace NCCheck2
          this.label1 = new System.Windows.Forms.Label();
          this.m_rtNCResult = new System.Windows.Forms.RichTextBox();
          this.label2 = new System.Windows.Forms.Label();
+         this.m_lblErrorCount = new System.Windows.Forms.Label();
          this.m_toolbar.SuspendLayout();
          this.SuspendLayout();
          // 
@@ -90,9 +91,9 @@ namespace NCCheck2
          this.label1.AutoSize = true;
          this.label1.Location = new System.Drawing.Point(12, 48);
          this.label1.Name = "label1";
-         this.label1.Size = new System.Drawing.Size(42, 13);
+         this.label1.Size = new System.Drawing.Size(53, 13);
          this.label1.TabIndex = 2;
-         this.label1.Text = "Original";
+         this.label1.Text = "Summary:";
          // 
          // m_rtNCResult
          // 
@@ -112,11 +113,20 @@ namespace NCCheck2
          this.label2.TabIndex = 4;
          this.label2.Text = "Error: ";
          // 
+         // m_lblErrorCount
+         // 
+         this.m_lblErrorCount.AutoSize = true;
+         this.m_lblErrorCount.Location = new System.Drawing.Point(71, 48);
+         this.m_lblErrorCount.Name = "m_lblErrorCount";
+         this.m_lblErrorCount.Size = new System.Drawing.Size(0, 13);
+         this.m_lblErrorCount.TabIndex = 5;
+         // 
          // NCCheck
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(863, 656);
+         this.Controls.Add(this.m_lblErrorCount);
          this.Controls.Add(this.label2);
          this.Controls.Add(this.m_rtNCResult);
          this.Controls.Add(this.label1);
@@ -141,6 +151,7 @@ namespace NCCheck2
       private System.Windows.Forms.Label label1;
       private System.Windows.Forms.RichTextBox m_rtNCResult;
       private System.Windows.Forms.Label label2;
+      private System.Windows.Forms.Label m_lblErrorCount;
    }
 }
 
