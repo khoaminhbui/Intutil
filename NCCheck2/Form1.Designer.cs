@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace NCCheck2
+namespace NCCheck
 {
    partial class NCCheck
    {

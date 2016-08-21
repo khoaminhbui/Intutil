@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace NCCheck2.Properties
+namespace NCCheck.Properties
 {
 
 

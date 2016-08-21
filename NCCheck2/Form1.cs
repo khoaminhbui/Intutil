@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-namespace NCCheck2
+namespace NCCheck
 {
    public enum ScrollBarType : uint
    {
