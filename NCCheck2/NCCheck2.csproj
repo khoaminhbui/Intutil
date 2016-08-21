@@ -52,6 +52,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="object\CheckLineResult.cs" />
     <Compile Include="object\WorkSection.cs" />
     <Compile Include="service\NCService.cs" />
     <Compile Include="Program.cs" />

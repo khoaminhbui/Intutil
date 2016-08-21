@@ -18,8 +18,11 @@ namespace NCCheck2
       private String m_status = STATUS_NONE;
       private WorkSection m_currentSection;
 
-      public String checkLine(String line)
+      public CheckLineResult checkLine(String line)
       {
+         CheckLineResult result = new CheckLineResult();
+         result.Line = line;
+
          // Store line
          m_lines.Add(line);
 
@@ -38,6 +41,7 @@ namespace NCCheck2
                m_currentSection.Description = m_lines[m_currentSection.StartLine - 2];
 
                m_status = STATUS_SECTION_BEGIN;
+               result.IsSectionHeader = true;
             }
          }
          else if (STATUS_SECTION_BEGIN.Equals(m_status))
@@ -55,7 +59,7 @@ namespace NCCheck2
             }
          }
          
-         return line;
+         return result;
       }
    }
 }

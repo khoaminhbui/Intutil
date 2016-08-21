@@ -44,8 +44,8 @@ namespace NCCheck2
             {
                while (reader.Peek() >= 0)
                {
-                  String processedLine = m_ncService.checkLine(reader.ReadLine());
-                  showLine(processedLine);
+                  CheckLineResult checkLineResult = m_ncService.checkLine(reader.ReadLine());
+                  showLine(checkLineResult);
                }
             }
             fileStream.Close();
@@ -57,10 +57,23 @@ namespace NCCheck2
 
       }
 
-      private void showLine(String line)
+      private void showLine(CheckLineResult checkLineResult)
       {
-         m_rtNC.AppendText(line);
-         m_rtNC.AppendText(Environment.NewLine);
+         int startColorPos = m_rtNCOriginal.TextLength;
+         int endColorPos = checkLineResult.Line.Length;
+
+         m_rtNCOriginal.AppendText(checkLineResult.Line);
+         m_rtNCOriginal.Select(startColorPos, endColorPos);
+         if (checkLineResult.IsSectionHeader)
+         {
+            m_rtNCOriginal.SelectionColor = Color.Green;
+         }
+         else
+         {
+            m_rtNCOriginal.SelectionColor = Color.Black;
+         }
+
+         m_rtNCOriginal.AppendText(Environment.NewLine);
       }
    }
 }

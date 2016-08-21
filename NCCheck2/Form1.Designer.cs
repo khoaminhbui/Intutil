@@ -29,20 +29,23 @@
       private void InitializeComponent()
       {
          System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NCCheck));
-         this.m_rtNC = new System.Windows.Forms.RichTextBox();
+         this.m_rtNCOriginal = new System.Windows.Forms.RichTextBox();
          this.toolStrip1 = new System.Windows.Forms.ToolStrip();
          this.m_openFile = new System.Windows.Forms.ToolStripButton();
          this.m_checkFile = new System.Windows.Forms.ToolStripButton();
+         this.label1 = new System.Windows.Forms.Label();
+         this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+         this.label2 = new System.Windows.Forms.Label();
          this.toolStrip1.SuspendLayout();
          this.SuspendLayout();
          // 
-         // m_rtNC
+         // m_rtNCOriginal
          // 
-         this.m_rtNC.Location = new System.Drawing.Point(12, 39);
-         this.m_rtNC.Name = "m_rtNC";
-         this.m_rtNC.Size = new System.Drawing.Size(777, 451);
-         this.m_rtNC.TabIndex = 0;
-         this.m_rtNC.Text = "";
+         this.m_rtNCOriginal.Location = new System.Drawing.Point(12, 45);
+         this.m_rtNCOriginal.Name = "m_rtNCOriginal";
+         this.m_rtNCOriginal.Size = new System.Drawing.Size(400, 500);
+         this.m_rtNCOriginal.TabIndex = 0;
+         this.m_rtNCOriginal.Text = "";
          // 
          // toolStrip1
          // 
@@ -51,7 +54,7 @@
             this.m_checkFile});
          this.toolStrip1.Location = new System.Drawing.Point(0, 0);
          this.toolStrip1.Name = "toolStrip1";
-         this.toolStrip1.Size = new System.Drawing.Size(801, 25);
+         this.toolStrip1.Size = new System.Drawing.Size(863, 25);
          this.toolStrip1.TabIndex = 1;
          this.toolStrip1.Text = "toolStrip1";
          // 
@@ -75,13 +78,42 @@
          this.m_checkFile.Text = "Check";
          this.m_checkFile.Click += new System.EventHandler(this.checkFile_Click);
          // 
+         // label1
+         // 
+         this.label1.AutoSize = true;
+         this.label1.Location = new System.Drawing.Point(13, 26);
+         this.label1.Name = "label1";
+         this.label1.Size = new System.Drawing.Size(42, 13);
+         this.label1.TabIndex = 2;
+         this.label1.Text = "Original";
+         // 
+         // richTextBox1
+         // 
+         this.richTextBox1.Location = new System.Drawing.Point(449, 45);
+         this.richTextBox1.Name = "richTextBox1";
+         this.richTextBox1.Size = new System.Drawing.Size(400, 500);
+         this.richTextBox1.TabIndex = 3;
+         this.richTextBox1.Text = "";
+         // 
+         // label2
+         // 
+         this.label2.AutoSize = true;
+         this.label2.Location = new System.Drawing.Point(446, 25);
+         this.label2.Name = "label2";
+         this.label2.Size = new System.Drawing.Size(50, 13);
+         this.label2.TabIndex = 4;
+         this.label2.Text = "Checked";
+         // 
          // NCCheck
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(801, 502);
+         this.ClientSize = new System.Drawing.Size(863, 557);
+         this.Controls.Add(this.label2);
+         this.Controls.Add(this.richTextBox1);
+         this.Controls.Add(this.label1);
          this.Controls.Add(this.toolStrip1);
-         this.Controls.Add(this.m_rtNC);
+         this.Controls.Add(this.m_rtNCOriginal);
          this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
          this.Name = "NCCheck";
          this.Text = "NCCheck";
@@ -94,10 +126,13 @@
 
       #endregion
 
-      private System.Windows.Forms.RichTextBox m_rtNC;
+      private System.Windows.Forms.RichTextBox m_rtNCOriginal;
       private System.Windows.Forms.ToolStrip toolStrip1;
       private System.Windows.Forms.ToolStripButton m_openFile;
       private System.Windows.Forms.ToolStripButton m_checkFile;
+      private System.Windows.Forms.Label label1;
+      private System.Windows.Forms.RichTextBox richTextBox1;
+      private System.Windows.Forms.Label label2;
    }
 }
 
