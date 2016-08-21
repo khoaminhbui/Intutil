@@ -7,12 +7,36 @@ using System.Linq;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.InteropServices;
 
 namespace NCCheck2
 {
+   public enum ScrollBarType : uint
+   {
+      SbHorz = 0,
+      SbVert = 1,
+      SbCtl = 2,
+      SbBoth = 3
+   }
+
+   public enum Message : uint
+   {
+      WM_VSCROLL = 0x0115
+   }
+
+   public enum ScrollBarCommands : uint
+   {
+      SB_THUMBPOSITION = 4
+   }
+
    public partial class NCCheck : Form
    {
       private NCService m_ncService;
+
+      [DllImport("User32.dll")]
+      public extern static int GetScrollPos(IntPtr hWnd, int nBar);
+      [DllImport("User32.dll")]
+      public extern static int SendMessage(IntPtr hWnd, uint msg, IntPtr wParam, IntPtr lParam);
 
       public NCCheck()
       {
@@ -81,6 +105,7 @@ namespace NCCheck2
          else
          {
             textbox.SelectionColor = Color.Black;
+            textbox.SelectionBackColor = Color.White;
          }
 
          textbox.AppendText(Environment.NewLine);
@@ -89,15 +114,15 @@ namespace NCCheck2
       private void formatLineNumber(Line line, RichTextBox textbox)
       {
          int startColorPos = textbox.TextLength;
-         int endColorPos = 6;
-         String numberMarker = "    ";
+         int endColorPos = 5;
+         String numberMarker = "  ";
          if (line.IsSectionHeader)
          {
-            numberMarker = " " + NCService.SECTION_START + " ";
+            numberMarker = " " + NCService.SECTION_START;
          }
          else if (line.IsSectionFooter)
          {
-            numberMarker = " " + NCService.SECTION_END + " ";
+            numberMarker = " " + NCService.SECTION_END;
          }
          textbox.AppendText(line.Position.ToString().PadLeft(3, ' ') + numberMarker);
          textbox.Select(startColorPos, endColorPos);
@@ -115,7 +140,7 @@ namespace NCCheck2
          {
             int startColorPos = textbox.TextLength;
             int endColorPos = token.Text.Length;
-            textbox.AppendText(token.Text + " ");
+            textbox.AppendText(token.Text);
             textbox.Select(startColorPos, endColorPos);
             if (Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH.Equals(token.ErrorCode))
             {
@@ -130,7 +155,14 @@ namespace NCCheck2
             else
             {
                textbox.SelectionColor = Color.Black;
+               textbox.SelectionBackColor = Color.White;
             }
+
+            // space
+            textbox.AppendText(" ");
+            textbox.Select(textbox.TextLength - 1, 1);
+            textbox.SelectionColor = Color.Black;
+            textbox.SelectionBackColor = Color.White;
          }
 
          textbox.AppendText(Environment.NewLine);

@@ -43,12 +43,12 @@ namespace NCCheck2
          // 
          // m_rtNCOriginal
          // 
+         this.m_rtNCOriginal.Font = new System.Drawing.Font("Courier New", 8.25F);
          this.m_rtNCOriginal.Location = new System.Drawing.Point(12, 45);
          this.m_rtNCOriginal.Name = "m_rtNCOriginal";
          this.m_rtNCOriginal.Size = new System.Drawing.Size(400, 500);
          this.m_rtNCOriginal.TabIndex = 0;
          this.m_rtNCOriginal.Text = "";
-         this.m_rtNCOriginal.Font = new Font(FontFamily.GenericMonospace, this.m_rtNCOriginal.Font.Size);
          // 
          // toolStrip1
          // 
@@ -92,12 +92,12 @@ namespace NCCheck2
          // 
          // m_rtNCResult
          // 
+         this.m_rtNCResult.Font = new System.Drawing.Font("Courier New", 8.25F);
          this.m_rtNCResult.Location = new System.Drawing.Point(449, 45);
          this.m_rtNCResult.Name = "m_rtNCResult";
          this.m_rtNCResult.Size = new System.Drawing.Size(400, 500);
          this.m_rtNCResult.TabIndex = 3;
          this.m_rtNCResult.Text = "";
-         this.m_rtNCResult.Font = new Font(FontFamily.GenericMonospace, this.m_rtNCOriginal.Font.Size);
          // 
          // label2
          // 
