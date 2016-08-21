@@ -118,6 +118,7 @@ namespace NCCheck
          // 
          // m_rtNCResult
          // 
+         this.m_rtNCResult.Enabled = false;
          this.m_rtNCResult.Font = new System.Drawing.Font("Courier New", 8.25F);
          this.m_rtNCResult.Location = new System.Drawing.Point(595, 64);
          this.m_rtNCResult.Name = "m_rtNCResult";
