@@ -1,4 +1,6 @@
-﻿namespace NCCheck2
+﻿using System.Drawing;
+
+namespace NCCheck2
 {
    partial class NCCheck
    {
@@ -46,6 +48,7 @@
          this.m_rtNCOriginal.Size = new System.Drawing.Size(400, 500);
          this.m_rtNCOriginal.TabIndex = 0;
          this.m_rtNCOriginal.Text = "";
+         this.m_rtNCOriginal.Font = new System.Drawing.Font(FontFamily.GenericMonospace, this.m_rtNCOriginal.Font.Size);
          // 
          // toolStrip1
          // 

@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace NCCheck2
 {
-   class CheckLineResult
+   class Line
    {
-      public int LinePos { get; set; }
-      public String Line { get; set; }
+      public int Position { get; set; }
+      public String Text { get; set; }
       public bool IsSectionHeader { get; set; }
    }
 }
