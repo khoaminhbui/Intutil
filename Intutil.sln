@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCCheck", "NCCheck\NCCheck.csproj", "{A7494C50-FE19-425B-AD1D-83EDED7A1592}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NCCheck2", "NCCheck2\NCCheck2.csproj", "{4155B546-8F23-482F-996A-97DD42738268}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A7494C50-FE19-425B-AD1D-83EDED7A1592}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A7494C50-FE19-425B-AD1D-83EDED7A1592}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A7494C50-FE19-425B-AD1D-83EDED7A1592}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A7494C50-FE19-425B-AD1D-83EDED7A1592}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4155B546-8F23-482F-996A-97DD42738268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4155B546-8F23-482F-996A-97DD42738268}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4155B546-8F23-482F-996A-97DD42738268}.Release|Any CPU.ActiveCfg = Release|Any CPU
