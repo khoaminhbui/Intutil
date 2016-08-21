@@ -124,17 +124,17 @@
   <data name="m_openFile.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         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
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAAJYSURBVGhD7ZZLSxtRGIbzE/xHXiZGGjGKFywV0YUuCi6y
-        kWSCF4LEQNt4IWZMU0ExGhQVRV2YhaILQUVEceFCsIsuuyiC4vLoO+TgJPMNNIYZz8F54IUs8mXOw8y8
-        +TwuLi4fCC1Ud6hFvKzcpMLKfOEnxAAim4lmdrbY/d/ZT3eKJwORvZl2drvVX1aO5j6LJfNWEcQok1K9
-        1U6kcGwzlYggXMapFI5tplIRp4J30xURKa6IaHkXkYtcD8vGGvUL255Q7b0tInmtQ7/AdrKT3eUHbU0+
-        3cUyEd+JpQj+G3CgcoO78Gukgd3sBtnjRcz2bEy0s5mIMmUpkhn2sVw8wNZ/tJaVvfQX9u80Sl7UjsxF
-        /U9a2BskRa5Xe/VH48+BSg6LFJxzNqTUkCK8HahBkYJ3BOecHK2uIkXwGY8JNSxSrjYHXkTqHnQJUCqy
-        9i2gtwE1LFKOs32vjQVKRbLjjex89Ss5LFKKGguUiuC5w/NHDYuUosYCRhH+ojtZoW9NUWMBowj+CBfG
-        /OSgSDE1FjCK7Ey3so1EGzksUkyNBYwiK/EmvQ2oYZFiaixgFMmM+BzbkyqJqbEAF5FpNTE1FuAisqwm
-        iKmxABdBZFhNyMYCXESW1YRsLMBFZFlNyMYCXAS3S4bVhGwsAJGtRIsuIsNqQjYWgMja94AUqwlCNhaA
-        yFLML8VqYtlYACIL0U9SrCaWjQUg8nOoXorVxLKxgKYqJ7hdMqwmlo0FUmHlEiLUoGiZj/oZ2VggqSq/
-        l+MB/UUSPZaNBZKq9y++IEvIxnJxcfkIeDzPu1W7j8FkhYcAAAAASUVORK5CYII=
+        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
 </value>
   </data>
   <data name="m_checkFile.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

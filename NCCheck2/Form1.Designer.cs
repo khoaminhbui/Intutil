@@ -34,7 +34,7 @@
          this.m_openFile = new System.Windows.Forms.ToolStripButton();
          this.m_checkFile = new System.Windows.Forms.ToolStripButton();
          this.label1 = new System.Windows.Forms.Label();
-         this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+         this.m_rtNCResult = new System.Windows.Forms.RichTextBox();
          this.label2 = new System.Windows.Forms.Label();
          this.toolStrip1.SuspendLayout();
          this.SuspendLayout();
@@ -87,22 +87,22 @@
          this.label1.TabIndex = 2;
          this.label1.Text = "Original";
          // 
-         // richTextBox1
+         // m_rtNCResult
          // 
-         this.richTextBox1.Location = new System.Drawing.Point(449, 45);
-         this.richTextBox1.Name = "richTextBox1";
-         this.richTextBox1.Size = new System.Drawing.Size(400, 500);
-         this.richTextBox1.TabIndex = 3;
-         this.richTextBox1.Text = "";
+         this.m_rtNCResult.Location = new System.Drawing.Point(449, 45);
+         this.m_rtNCResult.Name = "m_rtNCResult";
+         this.m_rtNCResult.Size = new System.Drawing.Size(400, 500);
+         this.m_rtNCResult.TabIndex = 3;
+         this.m_rtNCResult.Text = "";
          // 
          // label2
          // 
          this.label2.AutoSize = true;
          this.label2.Location = new System.Drawing.Point(446, 25);
          this.label2.Name = "label2";
-         this.label2.Size = new System.Drawing.Size(50, 13);
+         this.label2.Size = new System.Drawing.Size(37, 13);
          this.label2.TabIndex = 4;
-         this.label2.Text = "Checked";
+         this.label2.Text = "Result";
          // 
          // NCCheck
          // 
@@ -110,7 +110,7 @@
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(863, 557);
          this.Controls.Add(this.label2);
-         this.Controls.Add(this.richTextBox1);
+         this.Controls.Add(this.m_rtNCResult);
          this.Controls.Add(this.label1);
          this.Controls.Add(this.toolStrip1);
          this.Controls.Add(this.m_rtNCOriginal);
@@ -131,7 +131,7 @@
       private System.Windows.Forms.ToolStripButton m_openFile;
       private System.Windows.Forms.ToolStripButton m_checkFile;
       private System.Windows.Forms.Label label1;
-      private System.Windows.Forms.RichTextBox richTextBox1;
+      private System.Windows.Forms.RichTextBox m_rtNCResult;
       private System.Windows.Forms.Label label2;
    }
 }
