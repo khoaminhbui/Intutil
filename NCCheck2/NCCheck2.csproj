@@ -46,13 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="const\Const.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="object\CheckLineResult.cs" />
+    <Compile Include="object\Line.cs" />
+    <Compile Include="object\Token.cs" />
     <Compile Include="object\WorkSection.cs" />
     <Compile Include="service\NCService.cs" />
     <Compile Include="Program.cs" />

@@ -45,7 +45,7 @@ namespace NCCheck2
                int linePos = 0;
                while (reader.Peek() >= 0)
                {
-                  Line line = m_ncService.checkLine(reader.ReadLine());
+                  Line line = m_ncService.prepareLine(reader.ReadLine());
                   line.Position = ++linePos;
                   showLine(line);
                }
@@ -56,15 +56,24 @@ namespace NCCheck2
 
       private void checkFile_Click(object sender, EventArgs e)
       {
-
+         m_ncService.checkFile();
       }
 
       private void showLine(Line line)
       {
          // Line number
          int startColorPos = m_rtNCOriginal.TextLength;
-         int endColorPos = 5;
-         m_rtNCOriginal.AppendText(line.Position.ToString().PadLeft(3, ' ') + "   ");
+         int endColorPos = 6;
+         String numberMarker = "    ";
+         if (line.IsSectionHeader)
+         {
+            numberMarker = " " + NCService.SECTION_START + " ";
+         }
+         else if (line.IsSectionEnd)
+         {
+            numberMarker = " " + NCService.SECTION_END + " ";
+         }
+         m_rtNCOriginal.AppendText(line.Position.ToString().PadLeft(3, ' ') + numberMarker);
          m_rtNCOriginal.Select(startColorPos, endColorPos);
          m_rtNCOriginal.SelectionColor = Color.Black;
          m_rtNCOriginal.SelectionBackColor = Color.LightGray;
@@ -74,7 +83,7 @@ namespace NCCheck2
          endColorPos = line.Text.Length;
          m_rtNCOriginal.AppendText(line.Text);
          m_rtNCOriginal.Select(startColorPos, endColorPos);
-         if (line.IsSectionHeader)
+         if (line.IsSectionHeader || line.IsSectionEnd)
          {
             m_rtNCOriginal.SelectionColor = Color.Green;
             m_rtNCOriginal.SelectionBackColor = Color.Yellow;

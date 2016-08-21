@@ -10,15 +10,29 @@ namespace NCCheck2
       private static String MARKER_FILE_END = "%";
       private static String REGEX_SECTION_DESCRIPTION = @"^\(\s.+\s\)$";
       private static String REGEX_SECTION_HEADER = @"^T\d+ M6$";
+      private static String REGEX_SECTION_END = @"^M5$";
+      private static String[] REGEX_TOKEN_LIST;
       private static String STATUS_NONE = "None";
       private static String STATUS_SECTION_BEGIN = "Section Begin";
+
+      public static String SECTION_START = "^";
+      public static String SECTION_END = "$";
 
       public List<Line> m_lines = new List<Line>();
       public List<WorkSection> m_workSections = new List<WorkSection>();
       private String m_status = STATUS_NONE;
       private WorkSection m_currentSection;
 
-      public Line checkLine(String line)
+      public NCService()
+      {
+         REGEX_TOKEN_LIST = new String[]
+         {
+            @"^D\d+$",
+            @"^H\d+$"
+         };
+      }
+
+      public Line prepareLine(String line)
       {
          Line result = new Line();
          result.Text = line;
@@ -43,8 +57,8 @@ namespace NCCheck2
          }
          else if (STATUS_SECTION_BEGIN.Equals(m_status))
          {
-            Regex sectionDescriptionRegex = new Regex(REGEX_SECTION_DESCRIPTION);
-            Match match = sectionDescriptionRegex.Match(line);
+            Regex sectionEndRegex = new Regex(REGEX_SECTION_END);
+            Match match = sectionEndRegex.Match(line);
             if (match.Success || MARKER_FILE_END.Equals(line))
             {
                m_currentSection.EndLine = m_lines.Count - 1;
@@ -53,11 +67,40 @@ namespace NCCheck2
 
                m_currentSection = null;
                m_status = STATUS_NONE;
+               result.IsSectionEnd = true;
             }
          }
 
          m_lines.Add(result);
          return result;
+      }
+
+      public void checkFile()
+      {
+         foreach(Line line in m_lines)
+         {
+            line.TokenList = new List<Token>();
+
+            String[] lineParts = line.Text.Split(' ');
+            foreach (String tokenText in lineParts)
+            {
+               Token token = new Token();
+               token.Text = tokenText;
+               token.errorCode = Const.ERROR_NONE;
+
+               // check
+               foreach (String regex in REGEX_TOKEN_LIST)
+               {
+                  Regex regexToken = new Regex(regex);
+                  Match match = regexToken.Match(token.Text);
+                  if (match.Success)
+                  {
+                     //String tokenId = 
+                  }
+               }
+               
+            }
+         }
       }
    }
 }

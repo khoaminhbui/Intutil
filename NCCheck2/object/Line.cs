@@ -11,5 +11,8 @@ namespace NCCheck2
       public int Position { get; set; }
       public String Text { get; set; }
       public bool IsSectionHeader { get; set; }
+      public bool IsSectionEnd { get; set; }
+
+      public List<Token> TokenList { get; set; }
    }
 }
