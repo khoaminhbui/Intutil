@@ -230,10 +230,13 @@ namespace NCCheck
             }
 
             // space
-            textbox.AppendText(" ");
-            textbox.Select(textbox.TextLength - 1, 1);
-            textbox.SelectionColor = Color.Black;
-            textbox.SelectionBackColor = Color.White;
+            if (token.Trailer.Length > 0)
+            {
+               textbox.AppendText(token.Trailer);
+               textbox.Select(textbox.TextLength - token.Trailer.Length, token.Trailer.Length);
+               textbox.SelectionColor = Color.Black;
+               textbox.SelectionBackColor = Color.White;
+            }
          }
 
          textbox.AppendText(Environment.NewLine);

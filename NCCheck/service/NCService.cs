@@ -10,7 +10,9 @@ namespace NCCheck
       private static String MARKER_FILE_END = "%";
       private static String REGEX_SECTION_HEADER = @"^T\d+\s*M6$";
       private static String REGEX_SECTION_END = @"^(M5|M9)$";
-      private static String[] REGEX_TOKEN_LIST;
+      private static String REGEX_TOKEN = @"[A-Z][\.|\d|-]+";
+      private static String REGEX_SPACE = @"\s+";
+      private static String[] REGEX_TOKEN_CHECK_LIST;
       private static String STATUS_NONE = "None";
       private static String STATUS_SECTION_BEGIN = "Section Begin";
 
@@ -26,7 +28,7 @@ namespace NCCheck
 
       public NCService()
       {
-         REGEX_TOKEN_LIST = new String[]
+         REGEX_TOKEN_CHECK_LIST = new String[]
          {
             @"^D\d+$",
             @"^H\d+$"
@@ -51,11 +53,11 @@ namespace NCCheck
             Match match = sectionBeginRegex.Match(lineText);
             if (match.Success)
             {
-               List<String> sectionNameParts = splitTokens(lineText);
+               List<Token> sectionNameParts = splitTokens(lineText);
                m_currentSection = new WorkSection();
-               m_currentSection.Number = Convert.ToInt32(sectionNameParts[0].Substring(1));
+               m_currentSection.Number = Convert.ToInt32(sectionNameParts[0].OriginalText.Substring(1));
                m_currentSection.StartLine = Lines.Count;
-               m_currentSection.Name = sectionNameParts[0];
+               m_currentSection.Name = sectionNameParts[0].OriginalText;
                m_currentSection.Description = Lines[m_currentSection.StartLine - 2].Text;
 
                m_status = STATUS_SECTION_BEGIN;
@@ -104,19 +106,14 @@ namespace NCCheck
             }
 
             // Parse words of the line into tokens.
-            line.TokenList = new List<Token>();
+            line.TokenList = splitTokens(line.Text);
 
-            // Split token
-            List<String> lineParts = splitTokens(line.Text);
-
-            foreach (String tokenText in lineParts)
+            // check token error
+            foreach (Token token in line.TokenList)
             {
-               Token token = new Token();
-               token.OriginalText = tokenText;
                token.ErrorCode = Const.ErrorCode.ERROR_CODE_NONE;
 
-               // check
-               foreach (String regex in REGEX_TOKEN_LIST)
+               foreach (String regex in REGEX_TOKEN_CHECK_LIST)
                {
                   Regex regexToken = new Regex(regex);
                   Match match = regexToken.Match(token.OriginalText);
@@ -139,8 +136,6 @@ namespace NCCheck
                      break;
                   }
                }
-
-               line.TokenList.Add(token);
             }
          }
       }
@@ -164,11 +159,11 @@ namespace NCCheck
             {
                if (token.ErrorCode == Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH)
                {
-                  lineText += token.FixedText + " ";
+                  lineText += token.FixedText + token.Trailer;
                }
                else
                {
-                  lineText += token.OriginalText + " ";
+                  lineText += token.OriginalText + token.Trailer;
                }
             }
 
@@ -179,14 +174,38 @@ namespace NCCheck
          return fixedLines;
       }
 
-      private List<String> splitTokens(String lineText)
+      private List<Token> splitTokens(String lineText)
       {
-         List<String> tokenList = new List<String>();
-         Regex regexObj = new Regex(@"[A-Z][\.|\d|-]+", RegexOptions.IgnoreCase);
-         Match matchResults = regexObj.Match(lineText);
+         List<Token> tokenList = new List<Token>();
+         Regex regexToken = new Regex(REGEX_TOKEN, RegexOptions.IgnoreCase);
+         Match matchResults = regexToken.Match(lineText);
+
+         int previousMatchIndex = 0;
+         Token previousToken = null;
          while (matchResults.Success)
          {
-            tokenList.Add(matchResults.Value);
+            Token token = new Token();
+            token.OriginalText = matchResults.Value;
+            token.Trailer = "";
+            tokenList.Add(token);
+
+            // Calculate trailer for previous token
+            if (previousToken != null)
+            {
+               int previousTokenEndPos = previousMatchIndex + previousToken.OriginalText.Length;
+               if (previousTokenEndPos < matchResults.Index)
+               {
+                  previousToken.Trailer = lineText.Substring(previousTokenEndPos, matchResults.Index - previousTokenEndPos);
+               }
+               else
+               {
+                  previousToken.Trailer = "";
+               }
+            }
+
+            previousMatchIndex = matchResults.Index;
+            previousToken = token;
+
             matchResults = matchResults.NextMatch();
          }
 

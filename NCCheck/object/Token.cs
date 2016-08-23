@@ -10,6 +10,7 @@ namespace NCCheck
    {
       public String OriginalText { get; set; }
       public String FixedText { get; set; }
+      public String Trailer { get; set; }
       public int ErrorCode { get; set; }
    }
 }
