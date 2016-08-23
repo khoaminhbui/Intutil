@@ -8,9 +8,8 @@ namespace NCCheck
    class NCService
    {
       private static String MARKER_FILE_END = "%";
-      private static String REGEX_SECTION_DESCRIPTION = @"^\(\s.+\s\)$";
-      private static String REGEX_SECTION_HEADER = @"^T\d+ M6$";
-      private static String REGEX_SECTION_END = @"^M5$";
+      private static String REGEX_SECTION_HEADER = @"^T\d+\s*M6$";
+      private static String REGEX_SECTION_END = @"^(M5|M9)$";
       private static String[] REGEX_TOKEN_LIST;
       private static String STATUS_NONE = "None";
       private static String STATUS_SECTION_BEGIN = "Section Begin";
@@ -52,7 +51,7 @@ namespace NCCheck
             Match match = sectionBeginRegex.Match(lineText);
             if (match.Success)
             {
-               String[] sectionNameParts = lineText.Split(' ');
+               List<String> sectionNameParts = splitTokens(lineText);
                m_currentSection = new WorkSection();
                m_currentSection.Number = Convert.ToInt32(sectionNameParts[0].Substring(1));
                m_currentSection.StartLine = Lines.Count;
@@ -107,7 +106,9 @@ namespace NCCheck
             // Parse words of the line into tokens.
             line.TokenList = new List<Token>();
 
-            String[] lineParts = line.Text.Split(' ');
+            // Split token
+            List<String> lineParts = splitTokens(line.Text);
+
             foreach (String tokenText in lineParts)
             {
                Token token = new Token();
@@ -176,6 +177,20 @@ namespace NCCheck
          }
 
          return fixedLines;
+      }
+
+      private List<String> splitTokens(String lineText)
+      {
+         List<String> tokenList = new List<String>();
+         Regex regexObj = new Regex(@"[A-Z][\.|\d|-]+", RegexOptions.IgnoreCase);
+         Match matchResults = regexObj.Match(lineText);
+         while (matchResults.Success)
+         {
+            tokenList.Add(matchResults.Value);
+            matchResults = matchResults.NextMatch();
+         }
+
+         return tokenList;
       }
    }
 }
