@@ -19,6 +19,7 @@ namespace NCCheck
       public bool IsSectionHeader { get; set; }
       public bool IsSectionFooter { get; set; }
       public bool IsLastLine { get; set; }
+      public bool IsMissingLine { get; set; }
 
       public List<Token> TokenList { get; set; }
       public WorkSection Section { get; set; }

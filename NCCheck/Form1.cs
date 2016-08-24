@@ -165,7 +165,12 @@ namespace NCCheck
          int endColorPos = line.Text.Length;
          textbox.AppendText(line.Text);
          textbox.Select(startColorPos, endColorPos);
-         if (line.IsSectionHeader || line.IsSectionFooter)
+         if (line.IsMissingLine)
+         {
+            textbox.SelectionColor = Color.White;
+            textbox.SelectionBackColor = Color.Gray;
+         }
+         else if (line.IsSectionHeader || line.IsSectionFooter)
          {
             textbox.SelectionColor = Color.Green;
             textbox.SelectionBackColor = Color.Yellow;

@@ -10,6 +10,8 @@ namespace NCCheck
       private static String MARKER_FILE_END = "%";
       private static String REGEX_SECTION_HEADER = @"^T\d+\s*M6$";
       private static String REGEX_SECTION_END = @"^(M5|M9)$";
+      private static String REGEX_SECTION_END_SECOND_1 = @"^G91\s*G28\s*Z0\.\s*M9$";
+      private static String REGEX_SECTION_END_SECOND_2 = @"^G91\s*G28\s*Z0\.\s*M5$";
       private static String REGEX_TOKEN = @"[A-Z][\.|\d|-]+";
       private static String REGEX_SPACE = @"\s+";
       private static String[] REGEX_TOKEN_CHECK_LIST;
@@ -18,6 +20,8 @@ namespace NCCheck
 
       public static String SECTION_START = "^";
       public static String SECTION_END = "$";
+      public static String SECTION_END_1 = "M5";
+      public static String SECTION_END_2 = "M9";
 
       public List<WorkSection> m_workSections;
       private String m_status;
@@ -66,9 +70,45 @@ namespace NCCheck
          }
          else if (STATUS_SECTION_BEGIN.Equals(m_status))
          {
+            bool foundSectionEnd = false;
             Regex sectionEndRegex = new Regex(REGEX_SECTION_END);
             Match match = sectionEndRegex.Match(lineText);
             if (match.Success)
+            {
+               line.IsSectionFooter = true;
+
+               foundSectionEnd = true;
+            }
+            else
+            {
+               Regex sectionEndSecondRegex1 = new Regex(REGEX_SECTION_END_SECOND_1);
+               Regex sectionEndSecondRegex2 = new Regex(REGEX_SECTION_END_SECOND_2);
+               Match match1 = sectionEndSecondRegex1.Match(lineText);
+               Match match2 = sectionEndSecondRegex2.Match(lineText);
+               // M5 or M9 missing.
+               if (match1.Success)
+               {
+                  Line endLine = new Line();
+                  endLine.Text = SECTION_END_1;
+                  endLine.IsSectionFooter = true;
+                  endLine.IsMissingLine = true;
+                  Lines.Add(endLine);
+
+                  foundSectionEnd = true;
+               }
+               else if (match2.Success)
+               {
+                  Line endLine = new Line();
+                  endLine.Text = SECTION_END_2;
+                  endLine.IsSectionFooter = true;
+                  endLine.IsMissingLine = true;
+                  Lines.Add(endLine);
+
+                  foundSectionEnd = true;
+               }
+            }
+
+            if (foundSectionEnd)
             {
                m_currentSection.EndLine = Lines.Count - 1;
 
@@ -76,7 +116,6 @@ namespace NCCheck
 
                m_currentSection = null;
                m_status = STATUS_NONE;
-               line.IsSectionFooter = true;
             }
          }
 
