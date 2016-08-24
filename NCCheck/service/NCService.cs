@@ -13,9 +13,10 @@ namespace NCCheck
       private static String REGEX_SECTION_END_SECOND_1 = @"^G91\s*G28\s*Z0\.\s*M9$";
       private static String REGEX_SECTION_END_SECOND_2 = @"^G91\s*G28\s*Z0\.\s*M5$";
       private static String REGEX_SECTION_COMMENT = @"^\(.*\)$";
+      private static String REGEX_WATER_OPEN_LINE = @"^G43.*$";
+      private static String REGEX_WATER_OPEN_SUFFICIENT = @"^G43.*M8$";
       private static String REGEX_TOKEN = @"[A-Z][\.|\d|-]+";
-      private static String REGEX_SPACE = @"\s+";
-      private static String[] REGEX_TOKEN_CHECK_LIST;
+      private static String[] REGEX_TOKEN_ERROR_CHECK_LIST;
       private static String STATUS_NONE = "None";
       private static String STATUS_SECTION_BEGIN = "Section Begin";
 
@@ -23,6 +24,7 @@ namespace NCCheck
       public static String SECTION_END = "$";
       public static String SECTION_END_1 = "M5";
       public static String SECTION_END_2 = "M9";
+      public static String TOKEN_WATER_OPEN = "M8";
 
       public List<WorkSection> m_workSections;
       private String m_status;
@@ -33,7 +35,7 @@ namespace NCCheck
 
       public NCService()
       {
-         REGEX_TOKEN_CHECK_LIST = new String[]
+         REGEX_TOKEN_ERROR_CHECK_LIST = new String[]
          {
             @"^D\d+$",
             @"^H\d+$"
@@ -163,7 +165,7 @@ namespace NCCheck
             {
                token.ErrorCode = Const.ErrorCode.ERROR_CODE_NONE;
 
-               foreach (String regex in REGEX_TOKEN_CHECK_LIST)
+               foreach (String regex in REGEX_TOKEN_ERROR_CHECK_LIST)
                {
                   Regex regexToken = new Regex(regex);
                   Match match = regexToken.Match(token.OriginalText);
@@ -186,6 +188,23 @@ namespace NCCheck
                      break;
                   }
                }
+            }
+
+            // Check Missing token
+            Regex regexWaterLine = new Regex(REGEX_WATER_OPEN_LINE);
+            Regex regexWaterLineSufficient = new Regex(REGEX_WATER_OPEN_SUFFICIENT);
+            Match match1 = regexWaterLine.Match(line.Text);
+            Match match2 = regexWaterLineSufficient.Match(line.Text);
+            // Add M8 if missing
+            if (match1.Success && !match2.Success)
+            {
+               line.Text += TOKEN_WATER_OPEN;
+
+               Token token = new Token();
+               token.OriginalText = TOKEN_WATER_OPEN;
+               token.Trailer = "";
+               token.IsMissingToken = true;
+               line.TokenList.Add(token);
             }
          }
       }

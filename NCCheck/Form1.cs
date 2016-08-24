@@ -235,7 +235,12 @@ namespace NCCheck
                int endColorPos = token.OriginalText.Length;
                textbox.AppendText(token.OriginalText);
                textbox.Select(startColorPos, endColorPos);
-               if (Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH.Equals(token.ErrorCode))
+               if (token.IsMissingToken)
+               {
+                  textbox.SelectionColor = Color.White;
+                  textbox.SelectionBackColor = Color.Blue;
+               }
+               else if (Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH.Equals(token.ErrorCode))
                {
                   textbox.SelectionColor = Color.White;
                   textbox.SelectionBackColor = Color.Red;
