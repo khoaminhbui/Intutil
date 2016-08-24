@@ -12,6 +12,7 @@ namespace NCCheck
       private static String REGEX_SECTION_END = @"^(M5|M9)$";
       private static String REGEX_SECTION_END_SECOND_1 = @"^G91\s*G28\s*Z0\.\s*M9$";
       private static String REGEX_SECTION_END_SECOND_2 = @"^G91\s*G28\s*Z0\.\s*M5$";
+      private static String REGEX_SECTION_COMMENT = @"^\(.*\)$";
       private static String REGEX_TOKEN = @"[A-Z][\.|\d|-]+";
       private static String REGEX_SPACE = @"\s+";
       private static String[] REGEX_TOKEN_CHECK_LIST;
@@ -49,6 +50,16 @@ namespace NCCheck
       {
          Line line = new Line();
          line.Text = lineText;
+
+         // skip comment, not processing.
+         Regex sectionCommentRegex = new Regex(REGEX_SECTION_COMMENT);
+         Match matchComment = sectionCommentRegex.Match(lineText);
+         if (matchComment.Success)
+         {
+            line.IsCommentLine = true;
+            Lines.Add(line);
+            return line;
+         }
 
          // Analyze line
          if (STATUS_NONE.Equals(m_status))
@@ -139,7 +150,7 @@ namespace NCCheck
          {
             // Bypass line that is belong to a work section or header and footer of a section.
             if (line.Section == null
-               || line.IsSectionHeader || line.IsSectionFooter)
+               || line.IsCommentLine || line.IsSectionHeader || line.IsSectionFooter || line.IsMissingLine)
             {
                continue;
             }

@@ -168,11 +168,16 @@ namespace NCCheck
          if (line.IsMissingLine)
          {
             textbox.SelectionColor = Color.White;
-            textbox.SelectionBackColor = Color.Gray;
+            textbox.SelectionBackColor = Color.Blue;
+         }
+         else if (line.IsCommentLine)
+         {
+            textbox.SelectionColor = Color.White;
+            textbox.SelectionBackColor = Color.LightGray;
          }
          else if (line.IsSectionHeader || line.IsSectionFooter)
          {
-            textbox.SelectionColor = Color.Green;
+            textbox.SelectionColor = Color.Black;
             textbox.SelectionBackColor = Color.Yellow;
          }
          else
@@ -211,36 +216,49 @@ namespace NCCheck
          // Line number
          formatLineNumber(line, textbox);
 
-         // Checked Text
-         foreach (Token token in line.TokenList)
+         if (line.IsCommentLine)
          {
-            int startColorPos = textbox.TextLength;
-            int endColorPos = token.OriginalText.Length;
-            textbox.AppendText(token.OriginalText);
-            textbox.Select(startColorPos, endColorPos);
-            if (Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH.Equals(token.ErrorCode))
+            textbox.SelectionColor = Color.White;
+            textbox.SelectionBackColor = Color.LightGray;
+         }
+         else if (line.IsMissingLine)
+         {
+            textbox.SelectionColor = Color.White;
+            textbox.SelectionBackColor = Color.Blue;
+         }
+         else
+         {
+            // Checked Text
+            foreach (Token token in line.TokenList)
             {
-               textbox.SelectionColor = Color.White;
-               textbox.SelectionBackColor = Color.Red;
-            }
-            else if (Const.ErrorCode.ERROR_CODE_OK.Equals(token.ErrorCode))
-            {
-               textbox.SelectionColor = Color.White;
-               textbox.SelectionBackColor = Color.Green;
-            }
-            else
-            {
-               textbox.SelectionColor = Color.Black;
-               textbox.SelectionBackColor = Color.White;
-            }
+               int startColorPos = textbox.TextLength;
+               int endColorPos = token.OriginalText.Length;
+               textbox.AppendText(token.OriginalText);
+               textbox.Select(startColorPos, endColorPos);
+               if (Const.ErrorCode.ERROR_CODE_SECTION_ID_MISMATCH.Equals(token.ErrorCode))
+               {
+                  textbox.SelectionColor = Color.White;
+                  textbox.SelectionBackColor = Color.Red;
+               }
+               else if (Const.ErrorCode.ERROR_CODE_OK.Equals(token.ErrorCode))
+               {
+                  textbox.SelectionColor = Color.White;
+                  textbox.SelectionBackColor = Color.Green;
+               }
+               else
+               {
+                  textbox.SelectionColor = Color.Black;
+                  textbox.SelectionBackColor = Color.White;
+               }
 
-            // space
-            if (token.Trailer.Length > 0)
-            {
-               textbox.AppendText(token.Trailer);
-               textbox.Select(textbox.TextLength - token.Trailer.Length, token.Trailer.Length);
-               textbox.SelectionColor = Color.Black;
-               textbox.SelectionBackColor = Color.White;
+               // space
+               if (token.Trailer.Length > 0)
+               {
+                  textbox.AppendText(token.Trailer);
+                  textbox.Select(textbox.TextLength - token.Trailer.Length, token.Trailer.Length);
+                  textbox.SelectionColor = Color.Black;
+                  textbox.SelectionBackColor = Color.White;
+               }
             }
          }
 
