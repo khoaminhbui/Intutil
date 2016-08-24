@@ -89,7 +89,7 @@ namespace NCCheck
                displayCheckedLine(line, m_rtNCOriginal);
             }
 
-            updateStatistic(m_ncService.ErrorCount);
+            updateStatistic();
          }
       }
 
@@ -126,7 +126,7 @@ namespace NCCheck
             displayCheckedLine(line, m_rtNCOriginal);
          }
 
-         updateStatistic(m_ncService.ErrorCount);
+         updateStatistic();
       }
 
       private void saveFile_Click(object sender, EventArgs e)
@@ -150,7 +150,6 @@ namespace NCCheck
       private void resetView()
       {
          this.m_rtNCOriginal.Text = "";
-         this.m_rtNCResult.Text = "";
          this.m_lblErrorCount.Text = "Waiting for File...";
          this.m_lblErrorCount.ForeColor = Color.Black;
       }
@@ -282,16 +281,17 @@ namespace NCCheck
          }
       }
 
-      private void updateStatistic(int errorCount)
+      private void updateStatistic()
       {
-         if (errorCount > 1)
+         // Error
+         if (m_ncService.ErrorCount > 1)
          {
-            m_lblErrorCount.Text = errorCount.ToString() + " errors";
+            m_lblErrorCount.Text = m_ncService.ErrorCount.ToString() + " errors";
             m_lblErrorCount.ForeColor = Color.Red;
          }
-         else if (errorCount == 1)
+         else if (m_ncService.ErrorCount == 1)
          {
-            m_lblErrorCount.Text = errorCount.ToString() + " error";
+            m_lblErrorCount.Text = m_ncService.ErrorCount.ToString() + " error";
             m_lblErrorCount.ForeColor = Color.Red;
          }
          else
@@ -299,6 +299,23 @@ namespace NCCheck
             m_lblErrorCount.Text = "No error";
             m_lblErrorCount.ForeColor = Color.Green;
          }
+
+         // Missing
+         //if (m_ncService.MissingCount > 1)
+         //{
+         //   m_lblMissingCount.Text = m_ncService.MissingCount.ToString() + " missings";
+         //   m_lblMissingCount.ForeColor = Color.Blue;
+         //}
+         //else if (m_ncService.MissingCount == 1)
+         //{
+         //   m_lblMissingCount.Text = m_ncService.MissingCount.ToString() + " missing";
+         //   m_lblMissingCount.ForeColor = Color.Blue;
+         //}
+         //else
+         //{
+         //   m_lblMissingCount.Text = "No missing";
+         //   m_lblMissingCount.ForeColor = Color.Green;
+         //}
       }
    }
 }

@@ -38,18 +38,16 @@ namespace NCCheck
          this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
          this.m_saveFile = new System.Windows.Forms.ToolStripButton();
          this.label1 = new System.Windows.Forms.Label();
-         this.m_rtNCResult = new System.Windows.Forms.RichTextBox();
-         this.label2 = new System.Windows.Forms.Label();
          this.m_lblErrorCount = new System.Windows.Forms.Label();
          this.m_toolbar.SuspendLayout();
          this.SuspendLayout();
          // 
          // m_rtNCOriginal
          // 
-         this.m_rtNCOriginal.Font = new System.Drawing.Font("Courier New", 8.25F);
-         this.m_rtNCOriginal.Location = new System.Drawing.Point(12, 64);
+         this.m_rtNCOriginal.Font = new System.Drawing.Font("Courier New", 11F);
+         this.m_rtNCOriginal.Location = new System.Drawing.Point(15, 74);
          this.m_rtNCOriginal.Name = "m_rtNCOriginal";
-         this.m_rtNCOriginal.Size = new System.Drawing.Size(556, 580);
+         this.m_rtNCOriginal.Size = new System.Drawing.Size(556, 570);
          this.m_rtNCOriginal.TabIndex = 0;
          this.m_rtNCOriginal.Text = "";
          // 
@@ -65,7 +63,7 @@ namespace NCCheck
          this.m_toolbar.Location = new System.Drawing.Point(0, 0);
          this.m_toolbar.Name = "m_toolbar";
          this.m_toolbar.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-         this.m_toolbar.Size = new System.Drawing.Size(863, 40);
+         this.m_toolbar.Size = new System.Drawing.Size(578, 40);
          this.m_toolbar.TabIndex = 1;
          this.m_toolbar.Text = "toolbar";
          // 
@@ -110,36 +108,19 @@ namespace NCCheck
          // label1
          // 
          this.label1.AutoSize = true;
+         this.label1.Font = new System.Drawing.Font("Courier New", 12F);
          this.label1.Location = new System.Drawing.Point(12, 48);
          this.label1.Name = "label1";
-         this.label1.Size = new System.Drawing.Size(53, 13);
+         this.label1.Size = new System.Drawing.Size(88, 18);
          this.label1.TabIndex = 2;
          this.label1.Text = "Summary:";
          // 
-         // m_rtNCResult
-         // 
-         this.m_rtNCResult.Enabled = false;
-         this.m_rtNCResult.Font = new System.Drawing.Font("Courier New", 8.25F);
-         this.m_rtNCResult.Location = new System.Drawing.Point(595, 64);
-         this.m_rtNCResult.Name = "m_rtNCResult";
-         this.m_rtNCResult.Size = new System.Drawing.Size(254, 580);
-         this.m_rtNCResult.TabIndex = 3;
-         this.m_rtNCResult.Text = "";
-         // 
-         // label2
-         // 
-         this.label2.AutoSize = true;
-         this.label2.Location = new System.Drawing.Point(592, 48);
-         this.label2.Name = "label2";
-         this.label2.Size = new System.Drawing.Size(32, 13);
-         this.label2.TabIndex = 4;
-         this.label2.Text = "Fixed";
-         // 
          // m_lblErrorCount
          // 
-         this.m_lblErrorCount.Location = new System.Drawing.Point(71, 48);
+         this.m_lblErrorCount.Font = new System.Drawing.Font("Courier New", 12F);
+         this.m_lblErrorCount.Location = new System.Drawing.Point(96, 48);
          this.m_lblErrorCount.Name = "m_lblErrorCount";
-         this.m_lblErrorCount.Size = new System.Drawing.Size(497, 13);
+         this.m_lblErrorCount.Size = new System.Drawing.Size(330, 26);
          this.m_lblErrorCount.TabIndex = 5;
          this.m_lblErrorCount.Text = "Waiting for File...";
          // 
@@ -147,10 +128,8 @@ namespace NCCheck
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-         this.ClientSize = new System.Drawing.Size(863, 656);
+         this.ClientSize = new System.Drawing.Size(578, 656);
          this.Controls.Add(this.m_lblErrorCount);
-         this.Controls.Add(this.label2);
-         this.Controls.Add(this.m_rtNCResult);
          this.Controls.Add(this.label1);
          this.Controls.Add(this.m_toolbar);
          this.Controls.Add(this.m_rtNCOriginal);
@@ -171,8 +150,6 @@ namespace NCCheck
       private System.Windows.Forms.ToolStripButton m_openFile;
       private System.Windows.Forms.ToolStripButton m_checkFile;
       private System.Windows.Forms.Label label1;
-      private System.Windows.Forms.RichTextBox m_rtNCResult;
-      private System.Windows.Forms.Label label2;
       private System.Windows.Forms.Label m_lblErrorCount;
       private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
       private System.Windows.Forms.ToolStripButton m_saveFile;

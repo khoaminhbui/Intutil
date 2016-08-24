@@ -8,7 +8,7 @@ namespace NCCheck
    class NCService
    {
       private static String MARKER_FILE_END = "%";
-      private static String REGEX_SECTION_HEADER = @"^T\d+\s*M6$";
+      private static String REGEX_SECTION_HEADER = @"^T\d+\s*(M6|M06)$";
       private static String REGEX_SECTION_END = @"^(M5|M9)$";
       private static String REGEX_SECTION_END_SECOND_1 = @"^G91\s*G28\s*Z0\.\s*M9$";
       private static String REGEX_SECTION_END_SECOND_2 = @"^G91\s*G28\s*Z0\.\s*M5$";
@@ -32,6 +32,7 @@ namespace NCCheck
 
       public List<Line> Lines { get; set; }
       public int ErrorCount { get; set; }
+      public int MissingCount { get; set; }
 
       public NCService()
       {
@@ -46,6 +47,7 @@ namespace NCCheck
          m_status = STATUS_NONE;
          Lines = new List<Line>();
          ErrorCount = 0;
+         MissingCount = 0;
       }
 
       public Line prepareLine(String lineText)
@@ -150,9 +152,14 @@ namespace NCCheck
       {
          foreach (Line line in Lines)
          {
-            // Bypass line that is belong to a work section or header and footer of a section.
-            if (line.Section == null
-               || line.IsCommentLine || line.IsSectionHeader || line.IsSectionFooter || line.IsMissingLine)
+            // Bypass lines.
+            if (line.IsMissingLine)
+            {
+               MissingCount++;
+               continue;
+            }
+            else if (line.Section == null
+               || line.IsCommentLine || line.IsSectionHeader || line.IsSectionFooter)
             {
                continue;
             }
@@ -205,6 +212,8 @@ namespace NCCheck
                token.Trailer = "";
                token.IsMissingToken = true;
                line.TokenList.Add(token);
+
+               MissingCount++;
             }
          }
       }
